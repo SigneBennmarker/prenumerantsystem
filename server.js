@@ -20,7 +20,53 @@ var connection = mysql.createConnection({
 connection.connect();
 
 
-console.log("hejsan pernillissss");
+
+app.get("/api/get", (req, res) => {
+
+   // const prenumerantnummer = req.body.prenumerantnummer;
+    const prenumerantnummer = 1;
+
+    const sqlSelect = `Select * FROM tbl_prenumeranter WHERE pre_id = (?);`;
+
+
+    connection.query(sqlSelect, [prenumerantnummer], (err, result) => {
+      if(err){
+        console.log(err)
+      }
+      else{
+        console.log(result);
+      }
+  });
+});
+
+
+
+app.get("/api/post", (req, res) => {
+  console.log("hejsan")
+
+  // const prenumerantnummer = req.body.prenumerantnummer;
+   const prenumerantnummer = 1;
+   const personnummer = '9807029162';
+   const fornamn = 'Oscar';
+   const efternamn = 'Gilles';
+   const adress = 'kongstrongvagen 3';
+   const postnr = 29190;
+
+   const sqlSelect = `UPDATE tbl_prenumeranter SET pre_persnr = ?, pre_fornamn = ?, pre_efternamn = ?, pre_adress = ?, pre_postnr = ?  WHERE pre_id = (?);`;
+
+
+   connection.query(sqlSelect, [personnummer,fornamn, efternamn, adress, postnr, prenumerantnummer], (err, result) => {
+     if(err){
+       console.log(err)
+     }
+     else{
+       console.log(result);
+     }
+ });
+});
+
+
+
 
 app.listen(port, () => {
     console.log(`app listening at port http://localhost:${port}`);
