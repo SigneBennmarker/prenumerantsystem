@@ -21,20 +21,20 @@ connection.connect();
 
 
 
-app.get("/api/get", (req, res) => {
+app.post("/api/get", (req, res) => {
 
-   // const prenumerantnummer = req.body.prenumerantnummer;
-    const prenumerantnummer = 1;
+   const prenumerantnummer = req.body.prenumerantnummer;
 
     const sqlSelect = `Select * FROM tbl_prenumeranter WHERE pre_id = (?);`;
 
-
+    console.log("prennr", prenumerantnummer)
     connection.query(sqlSelect, [prenumerantnummer], (err, result) => {
       if(err){
         console.log(err)
       }
       else{
-        console.log(result);
+        console.log("resultat", result[0].pre_id);
+        res.send("fghjhg");
       }
   });
 });
