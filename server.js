@@ -23,7 +23,6 @@ connection.connect();
 
 app.get("/api/get/:prenumerantnummer", (req, res) => {
 
-  console.log(req.params.prenumerant);
 
    //const prenumerantnummer = 1;
    const prenumerantnummer = req.params.prenumerantnummer;
