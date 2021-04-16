@@ -21,11 +21,12 @@ connection.connect();
 
 
 
-app.get("/api/get/:prenumerantnummer", (req, res) => {
+app.get("/api/get/:id", (req, res) => {
 
 
    //const prenumerantnummer = 1;
-   const prenumerantnummer = req.params.prenumerantnummer;
+   console.log(req.params)
+   const prenumerantnummer = req.params.id;
 
     const sqlSelect = `Select * FROM tbl_prenumeranter WHERE pre_id = ?`;
     connection.query(sqlSelect, [prenumerantnummer], (err, result) => {
@@ -44,26 +45,29 @@ app.get("/api/get/:prenumerantnummer", (req, res) => {
 
 
 
-app.get("/api/post", (req, res) => {
-  console.log("hejsan")
+app.put("/api/put", (req, res) => {
+  console.log("halli hallåe")
 
-  // const prenumerantnummer = req.body.prenumerantnummer;
-   const prenumerantnummer = 1;
-   const personnummer = '9807029162';
-   const fornamn = 'Oscar';
-   const efternamn = 'Gilles';
-   const adress = 'kongstrongvagen 3';
-   const postnr = 29190;
+  const prenumerantnummer = req.body.pre_id;
+  console.log("hämtat prennr", prenumerantnummer);
+   const personnummer = req.body.pre_persnr;
+   console.log("hämtat personnummer", personnummer);
+
+   const fornamn =  req.body.pre_fornamn;
+   const efternamn = req.body.pre_efternamn;
+   const adress = req.body.pre_adress;
+   const postnr = req.body.pre_postnr;
+
 
    const sqlSelect = `UPDATE tbl_prenumeranter SET pre_persnr = ?, pre_fornamn = ?, pre_efternamn = ?, pre_adress = ?, pre_postnr = ?  WHERE pre_id = (?);`;
 
 
    connection.query(sqlSelect, [personnummer,fornamn, efternamn, adress, postnr, prenumerantnummer], (err, result) => {
      if(err){
-       console.log(err)
+       console.log("error: ", err)
      }
      else{
-       console.log(result);
+       console.log("result: ", result);
      }
  });
 });
